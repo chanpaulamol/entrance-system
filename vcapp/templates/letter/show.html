@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter</title>
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: right;
+        }
+
+        hr {
+            background-color: black;
+            height: 2px solid;
+        }
+    </style>
+</head>
+
+<body>
+    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad ipsam autem omnis odit enim, assumenda qui beatae.
+        Illo commodi distinctio iste maxime sint laborum aperiam quam unde quod consequatur laboriosam sapiente pariatur
+        aliquam, officia voluptatem excepturi ipsam perferendis! A possimus et doloremque debitis repellat pariatur in
+        molestias quia dolores fuga.</p>
+    <hr>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Message</th>
+                <th>Date</th>
+                <th>Customer ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for data in letters %}
+            <tr>
+                <td>{{data.subject}}</td>
+                <td>{{data.message}}</td>
+                <td>{{data.date}}</td>
+                <td>GM-0{{data.customer_id}}</td>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+
+</html>

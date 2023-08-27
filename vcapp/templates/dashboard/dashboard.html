@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% block title %}Letter{% endblock title %}
+{% block content %}
+<div class="container" style="height:800px; background-color:">
+    <div class="row p-3">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="row">
+                    <div class="search text-center">
+                        Search
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="card">
+                            <div class="card-body">
+                                Card 1
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="card">
+                            <div class="card-body">
+                                Card 1
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="card">
+                            <div class="card-body">
+                                Card 2
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="card">
+                            <div class="card-body">
+                                Card 3
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container">
+                    <div class="card">
+                        <div class="card-body">
+                            <div>
+                                <canvas id="pieChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="container">
+                <div class="row">
+                    <div class="card">
+                        <div class="card-title text-center">
+                            Business Transaction
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-hover">
+                                <thead class="thead-light bg-info">
+                                    <tr>
+                                        <th scope="col">Offer Letters</th>
+                                        <th scope="col">Orders</th>
+                                        <th scope="col">Invoices</th>
+                                        <th scope="col">Customers</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr scope="row" class="text-center">
+                                        <td>
+                                            {{number_letters}}
+                                        </td>
+                                        <td>{{number_orders}}
+                                        </td>
+                                        <td>{% for invoice in invoices %}
+                                            {{invoice.total}}
+                                            {% endfor %}</td>
+                                        <td>
+                                            {{number_customers}} </td </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div>
+                                    <canvas id="barChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="text-center">
+            ©2022 VC YUKI company All rights reserved!</a>
+        </div>
+    </footer>
+</div>
+{% comment %} Bar chart {% endcomment %}
+<script>
+    const ctx = document.getElementById('barChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# Sales',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                ],
+                borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% comment %} Pie chart {% endcomment %}
+<script>
+    const ct = document.getElementById('pieChart').getContext('2d');;
+    new Chart(ct, {
+        type: 'doughnut',
+        data: {
+            labels: [{% for feature in features %}'{{feature.name}}',{% endfor %}],
+        datasets: [{
+            label: '# Price',
+            data: [{% for feature in features %}{{ feature.price }}, {% endfor %}],
+        backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+        'rgba(201, 203, 207, 0.2)',
+        'rgba(255, 205, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+    ],
+        borderColor: [
+        'rgb(255, 99, 132)',
+        'rgb(255, 159, 64)',
+        'rgb(201, 203, 207)',
+        'rgb(255, 205, 86)',
+        'rgb(75, 192, 192)',
+        'rgb(54, 162, 235)',
+        'rgb(153, 102, 255)',
+    ],
+        borderWidth: 1
+                }]
+            },
+        options: {
+        scales: {
+            y: {
+                beginAtZero: false
+            }
+        }
+    }
+        });
+</script>
+{% endblock content %}
