@@ -21,5 +21,5 @@ urlpatterns = [
          views.delete_order, name="delete_order"),
 
     path('invoice/', views.invoice, name="invoice"),
-    path('invoice/', views.create_invoice, name="add_invoice"),
+    path('invoice/create_invoice', views.create_invoice, name="add_invoice")
 ]

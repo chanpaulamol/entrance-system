@@ -1,11 +1,11 @@
-from EntranceServiceApp.utils import render_to_pdf
+from entranceservice.utils import render_to_pdf
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.template.loader import get_template
 from django.urls import reverse
 from .forms import CustomerForm, LetterForm, OrderForm, InvoiceForm
-from VCapp.models import Customer, Letter, Orders, Feature, Invoice, Account, Company
+from .models import Customer, Letter, Orders, Feature, Invoice, Account, Company
 
 
 def index(request):
@@ -166,9 +166,16 @@ def delete_order(request, pk):
 
 def invoice(request):
     template = loader.get_template("invoices/invoice.html")
+
     form = InvoiceForm()
+    letters = Letter.objects.all()
+
+    for orders in Orders.objects.raw("SELECT * FROM vcapp_orders"):
+        return orders
     context = {
         'form': form,
+        'letters': letters,
+        'orders': orders,
     }
     return HttpResponse(template.render(context, request))
 
@@ -178,11 +185,13 @@ def create_invoice(request):
     letter_id = request.POST['letter_id']
     due_date = request.POST['due_date']
 
-    invoice = Invoice()
-    orders.save()
-    form = InvoiceForm()
+    for orders in Orders.objects.raw("SELECT * FROM vcapp_orders"):
+        return orders
+
     context = {
-        'form': form,
+        'letter_id': letter_id,
+        'due_date': due_date,
+
     }
     return HttpResponse(template.render(context, request))
 
